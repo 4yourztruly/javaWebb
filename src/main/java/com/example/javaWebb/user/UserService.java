@@ -9,7 +9,6 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
     public User createUser(String username, String password) {
         if(username.isEmpty()) {
             throw new IllegalArgumentException("Username can not be empty.");

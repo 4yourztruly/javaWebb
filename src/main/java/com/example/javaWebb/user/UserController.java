@@ -1,18 +1,16 @@
 package com.example.javaWebb.user;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/create-user")
     public ResponseEntity<?> hello(@RequestBody CreateUserDTO dto) {
