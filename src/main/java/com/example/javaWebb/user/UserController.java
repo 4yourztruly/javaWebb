@@ -13,7 +13,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create-user")
-    public ResponseEntity<?> hello(@RequestBody CreateUserDTO dto) {
+    public ResponseEntity<?> createUser(@RequestBody CreateUserDTO dto) {
         try{
             var user = userService.createUser(dto.username, dto.password);
             return ResponseEntity.ok(user.getUsername());
@@ -24,6 +24,12 @@ public class UserController {
 
     @Data
     public static class CreateUserDTO {
+        private String username;
+        private String password;
+    }
+
+    @Data
+    public static class LoginUserDTO {
         private String username;
         private String password;
     }
