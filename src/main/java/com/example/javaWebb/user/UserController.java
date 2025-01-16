@@ -22,6 +22,16 @@ public class UserController {
         }
     }
 
+    @GetMapping("/login-user")
+    public ResponseEntity<?> loginUser(@RequestBody LoginUserDTO dto) {
+        try{
+            var user = userService.loginUser(dto.username,dto.password);
+            return ResponseEntity.ok(user.getUsername());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @Data
     public static class CreateUserDTO {
         private String username;
