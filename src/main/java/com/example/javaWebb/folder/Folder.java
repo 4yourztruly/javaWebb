@@ -29,4 +29,5 @@ public class Folder {
     private final User user;
 
     public Folder() {this.id = null; this.files = null; this.user =null; this.foldersMany = null;}
+
 }
