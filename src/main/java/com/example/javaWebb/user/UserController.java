@@ -16,7 +16,7 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody CreateUserDTO dto) {
         try{
             var user = userService.createUser(dto.username, dto.password);
-            return ResponseEntity.ok(user.getUsername());
+            return ResponseEntity.ok(user.getId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -25,8 +25,8 @@ public class UserController {
     @GetMapping("/login-user")
     public ResponseEntity<?> loginUser(@RequestBody LoginUserDTO dto) {
         try{
-            var user = userService.loginUser(dto.username,dto.password);
-            return ResponseEntity.ok(user.getUsername());
+            var token = userService.loginUser(dto.username,dto.password);
+            return ResponseEntity.ok(token);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
