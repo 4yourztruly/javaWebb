@@ -1,5 +1,7 @@
 package com.example.javaWebb.user;
 
+import com.example.javaWebb.folder.Folder;
+import com.example.javaWebb.folder.FolderRepository;
 import com.example.javaWebb.security.JWTService;
 import com.example.javaWebb.security.PasswordEncoderConfig;
 import lombok.RequiredArgsConstructor;
