@@ -25,12 +25,20 @@ public class FolderService {
         if(inputFolder.isEmpty()) {
             throw new NoSuchElementException("folder does not exist");
         }
-        System.out.println("funkar");
+
         Folder folderObject = folderRepository.findFolderByNameAndUserId(folderName,user.getId()).get();
         Folder folder = new Folder(name, user, folderObject, null);
         folderRepository.save(folder);
         folderObject.getSubFolders().add(folder);
         folderRepository.save(folderObject);
         return folder;
+    }
+
+    public Optional<Folder> findFolderByNameAndUserId(String name, UUID id) {
+        return folderRepository.findFolderByNameAndUserId(name, id);
+    }
+
+    public void saveFolder(Folder folder) {
+        folderRepository.save(folder);
     }
 }

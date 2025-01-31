@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(name = "/api/file")
+@RequestMapping("/api/file")
 @RequiredArgsConstructor
 public class FileController {
 
@@ -24,7 +24,7 @@ public class FileController {
         try{
             String username = user.getUsername();
             System.out.println(username);
-            var file = fileService.addFile(dto.name,dto.content);
+            var file = fileService.addFile(dto.name,dto.content, user, dto.folder);
             return ResponseEntity.ok().body(file.getName());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -32,9 +32,9 @@ public class FileController {
     }
 
     @DeleteMapping("/delete-file")
-    public ResponseEntity<?> deleteFile(@RequestBody DeleteFileDTO dto) {
+    public ResponseEntity<?> deleteFile(@AuthenticationPrincipal User user, @RequestBody DeleteFileDTO dto) {
         try{
-            var file = fileService.deleteFile(dto.id);
+            var file = fileService.deleteFile(dto.name, user);
             return ResponseEntity.ok().body(file);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -42,10 +42,10 @@ public class FileController {
     }
 
     @GetMapping("/download-file")
-    public ResponseEntity<?> downloadFile(@RequestBody DownloadFileDTO dto) {
+    public ResponseEntity<?> downloadFile(@AuthenticationPrincipal User user, @RequestBody DownloadFileDTO dto) {
         try{
-            var file = fileService.downloadFile(dto.id);
-            return ResponseEntity.ok().body(file);
+            var file = fileService.downloadFile(dto.name, user);
+            return ResponseEntity.ok().body("name: " + file.getName() + "\rcontent: " + file.getContent());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -55,16 +55,17 @@ public class FileController {
     public static class FileDTO {
         private String name;
         private String content;
+        private String folder;
     };
 
     @Data
     public static class DeleteFileDTO {
-        private UUID id;
+        private String name;
     };
 
     @Data
     public static class DownloadFileDTO {
-        private UUID id;
+        private String name;
     };
 
 }
